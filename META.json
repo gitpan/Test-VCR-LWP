@@ -1,0 +1,35 @@
+{
+   "abstract" : "Record and playback LWP interactions.",
+   "author" : [
+      "Chris Reinhardt (perl-cpan@triv.org)"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.142690",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Test-VCR-LWP",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/creinhardt/perl-Test-VCR-LWP/issues"
+      },
+      "homepage" : "https://github.com/creinhardt/perl-Test-VCR-LWP",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/creinhardt/perl-Test-VCR-LWP.git",
+         "web" : "https://github.com/creinhardt/perl-Test-VCR-LWP"
+      }
+   },
+   "version" : "0.1"
+}
