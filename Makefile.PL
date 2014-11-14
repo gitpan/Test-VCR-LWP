@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
 	NAME         => 'Test::VCR::LWP',
 	VERSION_FROM => 'lib/Test/VCR/LWP.pm', 
-	AUTHOR       => 'Chris Reinhardt (perl-cpan@triv.org)',
+	AUTHOR       => 'Chris Reinhardt (crein@cpan.org)',
 	ABSTRACT     => 'Record and playback LWP interactions.',
 	PREREQ_PM    => {
 		'LWP::UserAgent'       => 0,
@@ -19,6 +19,9 @@ WriteMakefile(
 	LICENSE => 'perl',
 	META_MERGE => {
 		'meta-spec' => { version => 2 },
+		contributors => [
+			'Mark Ng <cpan@markng.co.uk>',
+		],
 		resources   => {
 			homepage    => 'https://github.com/creinhardt/perl-Test-VCR-LWP',
 			bugtracker  => {

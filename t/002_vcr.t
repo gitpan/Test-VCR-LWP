@@ -9,6 +9,7 @@ use Test::File::Contents;
 use Test::VCR::LWP qw(withVCR);
 use LWP::UserAgent;
 use Sub::Name;
+use File::Spec;
 
 describe "A test recorder" => sub {
 	my $original_lwp_request = \&LWP::UserAgent::request;
@@ -184,9 +185,10 @@ describe "A test recorder" => sub {
 			
 			$caller->();
 			
+			my $file = File::Spec->catfile('t', 'foo.tape');
 			cmp_deeply(
 				\%sent_args,
-				{ tape => re(qr:t/foo\.tape$:) },
+				{ tape => re(qr:\Q$file\E$:) },
 			);
 			
 			unlink($sent_args{tape});

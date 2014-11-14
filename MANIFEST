@@ -3,7 +3,8 @@ lib/Test/VCR/LWP.pm
 LICENSE
 Makefile.PL
 MANIFEST
-README.pod
+MANIFEST.SKIP
+README
 t/001_load.t
 t/002_vcr.t
 META.yml                                 Module YAML meta-data (added by MakeMaker)

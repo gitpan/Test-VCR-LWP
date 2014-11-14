@@ -1,10 +1,18 @@
 ---
 abstract: 'Record and playback LWP interactions.'
 author:
-  - 'Chris Reinhardt (perl-cpan@triv.org)'
-build_requires: {}
+  - 'Chris Reinhardt (crein@cpan.org)'
+build_requires:
+  ExtUtils::MakeMaker: '0'
+  Sub::Name: '0'
+  Test::Deep: '0'
+  Test::File::Contents: '0'
+  Test::More: '0'
+  Test::Spec: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.142690'
+generated_by: 'ExtUtils::MakeMaker version 7.02, CPAN::Meta::Converter version 2.142690'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -14,8 +22,12 @@ no_index:
   directory:
     - t
     - inc
+requires:
+  LWP::UserAgent: '0'
 resources:
   bugtracker: https://github.com/creinhardt/perl-Test-VCR-LWP/issues
   homepage: https://github.com/creinhardt/perl-Test-VCR-LWP
   repository: https://github.com/creinhardt/perl-Test-VCR-LWP.git
-version: '0.1'
+version: '0.2'
+x_contributors:
+  - 'Mark Ng <cpan@markng.co.uk>'

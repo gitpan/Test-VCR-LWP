@@ -10,7 +10,7 @@ use File::Spec;
 
 use base 'Exporter';
 our @EXPORT_OK = qw(withVCR);
-our $VERSION   = '0.1';
+our $VERSION   = '0.2';
 
 =head1 NAME
 
@@ -230,14 +230,24 @@ sub withVCR (&;@) {
 	$vcr->run($code);
 }
 
+=head1 TODO
 
-=head1 AUTHOR
+=over 2
+
+=item *
+
+The docs are pretty middling at the moment.
+
+=back
+
+=head1 AUTHORS
 
     Chris Reinhardt
-    CPAN ID: CREIN
-    Liquid Web Inc.
-    perl-cpan@triv.org
+    crein@cpan.org
 
+    Mark Ng
+    cpan@markng.co.uk   
+    
 =head1 COPYRIGHT
 
 This program is free software; you can redistribute
@@ -248,7 +258,7 @@ LICENSE file included with this module.
 
 =head1 SEE ALSO
 
-L<LWP::UserAgent>, perl(1).
+L<LWP::UserAgent>, perl(1)
 
 =cut
 
