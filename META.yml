@@ -28,6 +28,6 @@ resources:
   bugtracker: https://github.com/creinhardt/perl-Test-VCR-LWP/issues
   homepage: https://github.com/creinhardt/perl-Test-VCR-LWP
   repository: https://github.com/creinhardt/perl-Test-VCR-LWP.git
-version: '0.2'
+version: '0.3'
 x_contributors:
   - 'Mark Ng <cpan@markng.co.uk>'

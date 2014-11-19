@@ -59,80 +59,99 @@ describe "A test recorder" => sub {
 		};
 		it "should record something" => sub {
 			$sut->run(sub {
-				$ua->get('http://www.google.com');		
+				$ua->get('http://www.apple.com');		
 			});
-			file_contents_like('test.tape', qr/google/i);
+			file_contents_like('test.tape', qr/apple/i);
 		};
 		it "should record another thing" => sub {
 			$sut->run(sub {
-				$ua->get('http://metacpan.org');		
+				$ua->get('http://search.cpan.org');		
 			});
-			file_contents_like('test.tape', qr/perl/i);				
+			file_contents_like('test.tape', qr/cpan/i);				
+		};
+		it "should record if an exception is thrown" => sub {
+			eval {
+				$sut->run(sub {
+					$ua->get('http://search.cpan.org');
+					die "Exception!\n";
+				});
+			};
+			file_contents_like('test.tape', qr/cpan/i);
+		};
+		it "should rethrow exceptions" => sub {
+			eval {
+				$sut->run(sub {
+					$ua->get('http://search.cpan.org');
+					die "Exception!\n";
+				});
+			};
+			my $e = $@;
+			is($e, "Exception!\n");
 		};
 		it "should record multiple things" => sub {
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
-				$ua->get('http://metacpan.org');		
+				$ua->get('http://www.apple.com');
+				$ua->get('http://search.cpan.org');		
 			});
-			file_contents_like('test.tape', qr/google/i);
-			file_contents_like('test.tape', qr/perl/i);				
+			file_contents_like('test.tape', qr/apple/i);
+			file_contents_like('test.tape', qr/cpan/i);				
 		};
 		it "should play a previously recorded thing" => sub {
 			my $res;
 			
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
+				$ua->get('http://www.apple.com');
 			});
 			
 			$sut->run(sub {
 				$ua->protocols_forbidden(['http']);
-				$res = $ua->get('http://www.google.com');
+				$res = $ua->get('http://www.apple.com');
 			});
 			isa_ok($res, "HTTP::Response");
-			like($res->content, qr/google/i);
+			like($res->content, qr/apple/i);
 		};
 		it "should play previously recorded thingS." => sub {
 			my @res;
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
-				$ua->get('http://metacpan.org');
+				$ua->get('http://www.apple.com');
+				$ua->get('http://search.cpan.org');
 			});
 			
 			$sut->run(sub {
 				$ua->protocols_forbidden(['http']);
 
 				@res = (
-					$ua->get('http://www.google.com'),
-					$ua->get('http://metacpan.org'),
+					$ua->get('http://www.apple.com'),
+					$ua->get('http://search.cpan.org'),
 				);
 			});
 			
 			isa_ok($res[0], "HTTP::Response");
-			like($res[0]->content, qr/google/i);
+			like($res[0]->content, qr/apple/i);
 			isa_ok($res[1], "HTTP::Response");
-			like($res[1]->content, qr/perl/i);
+			like($res[1]->content, qr/cpan/i);
 		};
 		it "should play and then record when asked for something that isn't in the tape" => sub {
 			my $res;
 			
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
+				$ua->get('http://www.apple.com');
 			});
 			
 			$sut->run(sub {
-				$res = $ua->get('http://metacpan.org');
+				$res = $ua->get('http://search.cpan.org');
 			});
 			isa_ok($res, "HTTP::Response");
-			like($res->content, qr/perl/i);
+			like($res->content, qr/cpan/i);
 			
 		};
 		it "should know its recording state" => sub {
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
+				$ua->get('http://www.apple.com');
 				ok($_->is_recording);
 			});
 			$sut->run(sub {
-				$ua->get('http://www.google.com');
+				$ua->get('http://www.apple.com');
 				ok(!$_->is_recording);
 			});
 		};

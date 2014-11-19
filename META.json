@@ -57,7 +57,7 @@
          "web" : "https://github.com/creinhardt/perl-Test-VCR-LWP"
       }
    },
-   "version" : "0.2",
+   "version" : "0.3",
    "x_contributors" : [
       "Mark Ng <cpan@markng.co.uk>"
    ]

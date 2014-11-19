@@ -1,5 +1,10 @@
 Revision history for Perl module Test::VCR::LWP
 
+0.3 Wed Nov 19 2014
+    - Don't use sites that are https only in the test suite.
+    - Catch and rethrow exceptions while recording, allowing the tape to still
+      be saved to file.
+
 0.2 Fri Nov 14 2014
     - Fix authors to include Mark Ng.
     - Fix a bug where the tests suite failed under windows.
