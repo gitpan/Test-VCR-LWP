@@ -39,6 +39,7 @@
          "requires" : {
             "Sub::Name" : "0",
             "Test::Deep" : "0",
+            "Test::Exception" : "0",
             "Test::File::Contents" : "0",
             "Test::More" : "0",
             "Test::Spec" : "0"
@@ -48,16 +49,16 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/creinhardt/perl-Test-VCR-LWP/issues"
+         "web" : "https://github.com/ctriv/perl-Test-VCR-LWP/issues"
       },
-      "homepage" : "https://github.com/creinhardt/perl-Test-VCR-LWP",
+      "homepage" : "https://github.com/ctriv/perl-Test-VCR-LWP",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/creinhardt/perl-Test-VCR-LWP.git",
-         "web" : "https://github.com/creinhardt/perl-Test-VCR-LWP"
+         "url" : "https://github.com/ctriv/perl-Test-VCR-LWP.git",
+         "web" : "https://github.com/ctriv/perl-Test-VCR-LWP"
       }
    },
-   "version" : "0.3",
+   "version" : "0.4",
    "x_contributors" : [
       "Mark Ng <cpan@markng.co.uk>"
    ]

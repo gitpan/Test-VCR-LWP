@@ -6,7 +6,8 @@ use warnings;
 use Test::Spec;
 use Test::More;
 use Test::File::Contents;
-use Test::VCR::LWP qw(withVCR);
+use Test::VCR::LWP qw(withVCR withoutVCR);
+use Test::Exception;
 use LWP::UserAgent;
 use Sub::Name;
 use File::Spec;
@@ -212,10 +213,60 @@ describe "A test recorder" => sub {
 			
 			unlink($sent_args{tape});
 		};
+		it "should throw an exception if given no tape name and called from an anonymous sub" => sub {
+			dies_ok {
+				withVCR { };
+			};
+		};
+		
+	};
+	
+	describe 'with a withoutVCR function' => sub {
+		it "should call the code it is passed." => sub {
+			my $sut = 0;
+			withVCR {
+				withoutVCR { $sut++ };
+			} tape => 'bar.tape';
+			
+			ok($sut);
+		};
+		it "should not record any HTTP activity" => sub {
+			withVCR {
+				withoutVCR {
+					my $ua = LWP::UserAgent->new;
+					$ua->get('http://www.apple.com');
+				};
+			} tape => 'bar.tape';
+			file_contents_unlike('bar.tape', qr/apple/i);
+		};
+		it "should not interfere with wanted recording" => sub {
+			withVCR {
+				my $ua = LWP::UserAgent->new;
+				
+				withoutVCR {
+					$ua->get('http://www.apple.com');
+				};
+				
+				$ua->get('http://search.cpan.org/');
+			} tape => 'bar.tape';
+			
+			file_contents_like('bar.tape', qr/cpan/i);
+			file_contents_unlike('bar.tape', qr/apple/i);
+		};
+		it "should throw a good error if called outside of a withVCR" => sub {
+			dies_ok {
+				withoutVCR { }
+			};
+			
+			like($@, qr/withVCR/);
+		};
 	};
 };
 
 
-END { unlink 'foo.tape' }
+END {
+	unlink 'foo.tape';
+	unlink 'bar.tape';
+}
 
 runtests unless caller;
