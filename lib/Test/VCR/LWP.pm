@@ -1,5 +1,5 @@
 package Test::VCR::LWP;
-
+$Test::VCR::LWP::VERSION = '0.5';
 use strict;
 use warnings;
 
@@ -11,12 +11,15 @@ use Carp;
 
 use base 'Exporter';
 our @EXPORT_OK = qw(withVCR withoutVCR);
-our $VERSION   = '0.4';
 our $__current_vcr;
 
 =head1 NAME
 
 Test::VCR::LWP - Record and playback LWP interactions.
+
+=head1 VERSION
+
+version 0.5
 
 =head1 SYNOPSIS
 
@@ -85,17 +88,20 @@ sub record {
 	my $tape = $self->_load_tape;
 	
 	no warnings 'redefine';
+	
 	local *LWP::UserAgent::request = sub {
 		my ($ua, $req) = @_;
 		local *LWP::UserAgent::request = $original_lwp_request;
-		
-		diag("recording http response for %s %s", $req->method, $req->uri);
 		
 		my $res = $original_lwp_request->($ua, $req);
 		
 		# skip recording is often set by the withoutVCR function
 		unless ($self->{skip_recording}) {
+			diag("recording http response for %s %s", $req->method, $req->uri);
 			push(@$tape, {request => $req, response => $res});
+		}
+		else {
+			diag("Not recording (within a withoutVCR block).");
 		}
 		
 		return $res;
@@ -221,8 +227,8 @@ The tape file we be placed in the same directory as the script if no tape
 argument is given.  If this function is called outside of a subroutine, the
 filename of the current perl script will be used to derive a tape filename.
 
-Within the code block, $_ is the current vcr object.  The C<is_recording> method
-might be useful.
+Within the code block, C<$_> is the current vcr object.  The C<is_recording>
+method might be useful.
 
 =cut
 
@@ -242,6 +248,7 @@ sub withVCR (&;@) {
 	};
 	
 	my $vcr = Test::VCR::LWP->new(%args);
+	diag("Created $vcr");
 	# this is so withoutVCR can get to the current vcr object.
 	local $__current_vcr = $vcr;
 	$vcr->run($code);
@@ -263,14 +270,15 @@ Allows a section of a withVCR code block to skip recording.
 
 =cut
 
-sub withoutVCR (&;@) {
+sub withoutVCR (&) {
 	my $code = shift;
-	my %args = @_;
 	
 	if (!$__current_vcr) {
 		croak "Using withoutVCR outside of a withVCR. You probably don't want to do this.";
 	}
+	
 	local $__current_vcr->{skip_recording} = 1;
+	diag("Setting skip in $__current_vcr");
  	$code->();
 }
 
@@ -309,4 +317,3 @@ L<LWP::UserAgent>, perl(1)
 
 1;
 __END__
-

@@ -1,5 +1,10 @@
 Revision history for Perl module Test::VCR::LWP
 
+0.5 Thu Dec 04 2014
+    - Moved build process over to Dist::Zilla.
+    - Some minor doc tweaks.
+    - Changed debug output to be more accurate.
+    
 0.4 Wed Nov 26 2014
     - Added withoutVCR function, which can be used within a withVCR call to skip
       the recording of certain interactions.
